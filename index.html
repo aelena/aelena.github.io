@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antonio Elena</title>
+  <meta name="description" content="Antonio Elena — technologist, architect, writer · advisor at sigintent.com">
+  <meta property="og:title" content="Antonio Elena">
+  <meta property="og:description" content="technologist · architect · writer">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aelena.com">
+  <link rel="canonical" href="https://aelena.com">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3' y='3' width='10' height='10' fill='%231a1a1a'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+    <span data-theme-label>&gt; dark</span>
+  </button>
+  <main>
+    <h1>Antonio Elena</h1>
+    <p class="tagline">ai · architecture · writing</p>
+    <nav>
+      <a href="https://www.linkedin.com/in/aelena/" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> linkedin
+      </a>
+      <a href="https://sigintent.com" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> advisory
+        <span class="subtitle">sigintent.com</span>
+      </a>
+      <a href="https://aelena74.gumroad.com/l/xsp" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> book
+        <span class="subtitle">XML Structured Prompting</span>
+      </a>
+      <a href="https://github.com/aelena/writings" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> writings
+      </a>
+      <a href="https://github.com/aelena/trustworthy-ai" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> trustworthy-ai
+        <span class="subtitle">body of knowledge</span>
+      </a>
+      <a href="https://github.com/aelena" target="_blank" rel="noopener noreferrer">
+        <span class="prompt">&gt;</span> github
+      </a>
+      <a href="mailto:antonioelena@gmail.com">
+        <span class="prompt">&gt;</span> contact
+        <span class="cursor"></span>
+      </a>
+    </nav>
+  </main>
+  <script>
+    (function () {
+      var btn = document.querySelector('.theme-toggle');
+      var label = btn.querySelector('[data-theme-label]');
+      var root = document.documentElement;
+
+      function currentTheme() {
+        var attr = root.getAttribute('data-theme');
+        if (attr) return attr;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function render() {
+        var t = currentTheme();
+        label.textContent = t === 'dark' ? '> light' : '> dark';
+        btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+      }
+
+      btn.addEventListener('click', function () {
+        var next = currentTheme() === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        render();
+      });
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        if (!localStorage.getItem('theme')) render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
