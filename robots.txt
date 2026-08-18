@@ -1,0 +1,34 @@
+# aelena.com — the personal hub. Everything here is meant to be found.
+#
+# The assistant crawlers are named explicitly rather than left to the wildcard,
+# because this page exists so that someone looking up the name lands somewhere
+# accurate, and increasingly they ask an assistant instead of a search engine.
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://aelena.com/sitemap.xml
