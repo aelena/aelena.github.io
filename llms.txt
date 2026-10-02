@@ -1,0 +1,21 @@
+# Antonio Elena
+
+> Personal hub of Antonio Elena: CTO, software architect and author in Madrid. Two decades in architecture and engineering leadership (Global Head of Architecture & Technology at SGS, CTO at BeAI Energy); independent technology advisory through SIGINTENT. This page is a one-screen router to everything else.
+
+## Sites
+
+- [sig-intent.com](https://sig-intent.com): Advisory practice: fractional CTO, architecture review, AI strategy sprint, advisory retainer. Essays on technology decisions at /writing/.
+- [sig-intent.com/llms.txt](https://sig-intent.com/llms.txt): Machine-readable index of the advisory site and every essay.
+- [Self & System](https://selfandsystem.substack.com): Essays on philosophy, psychology and AI. Same author, different register.
+- [GitHub](https://github.com/aelena): 57 public repositories. Notable: rag-advisor (RAG configuration advisor, PyPI), agentic-board (multi-agent boardroom with blind evaluation), trustworthy-ai (AI assurance body of knowledge), file-api (.NET document platform, NuGet), c-tiktoken (BPE tokenizer in C with a book), doc-curator (document corpus inventory), flowtrack (portfolio tracker with MCP server).
+- [LinkedIn](https://www.linkedin.com/in/aelena/): Career detail.
+
+## Books
+
+- [Build a Tokenizer in C](https://aelena74.gumroad.com/l/c-tokenizer): Builds OpenAI's tiktoken tokenizer from scratch in C over eight chapters; the testing findings are part of the text.
+- [Guide to XML-Structured Prompting](https://aelena74.gumroad.com/l/xsp): Prompting treated as a software engineering discipline.
+
+## Contact
+
+- Email: antonioelena@gmail.com
+- Location: Madrid, Spain. Open to international and remote work.

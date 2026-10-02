@@ -25,28 +25,76 @@
   <meta name="twitter:image" content="https://aelena.com/og.png">
 
   <link rel="canonical" href="https://aelena.com">
+  <meta name="author" content="Antonio Elena">
+  <link rel="alternate" type="text/plain" href="https://aelena.com/llms.txt" title="llms.txt">
 
   <!-- This page exists to be found by someone searching the name, so the entity
        is stated explicitly rather than left to be inferred from link text. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Antonio Elena",
-    "url": "https://aelena.com",
-    "description": "Technologist, architect and writer. Independent technology advisory through SIGINTENT.",
-    "knowsAbout": [
-      "Artificial intelligence",
-      "Software architecture",
-      "Cloud computing",
-      "Distributed systems",
-      "Technology strategy"
-    ],
-    "sameAs": [
-      "https://www.linkedin.com/in/aelena/",
-      "https://github.com/aelena",
-      "https://sig-intent.com",
-      "https://aelena74.gumroad.com"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://aelena.com/#person",
+        "name": "Antonio Elena",
+        "url": "https://aelena.com",
+        "image": "https://aelena.com/og.png",
+        "jobTitle": "Chief Technology Officer, architect and author",
+        "description": "Technologist, architect and writer. Two decades in architecture and engineering leadership; independent technology advisory through SIGINTENT.",
+        "nationality": "Spanish",
+        "homeLocation": { "@type": "Place", "name": "Madrid, Spain" },
+        "knowsLanguage": ["es", "en", "it"],
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Universidad de Sevilla" },
+          { "@type": "EducationalOrganization", "name": "INSEAD" },
+          { "@type": "EducationalOrganization", "name": "CTO Academy" }
+        ],
+        "knowsAbout": [
+          "Artificial intelligence",
+          "Agentic systems and LLM evaluation",
+          "Retrieval-augmented generation",
+          "Software architecture",
+          "Cloud computing (Azure, PaaS, serverless)",
+          "Distributed systems",
+          "DevOps and DevSecOps",
+          "Technology strategy",
+          "AI governance and the EU AI Act"
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/aelena/",
+          "https://github.com/aelena",
+          "https://sig-intent.com",
+          "https://selfandsystem.substack.com",
+          "https://aelena74.gumroad.com"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://aelena.com/#website",
+        "url": "https://aelena.com",
+        "name": "Antonio Elena",
+        "inLanguage": "en",
+        "about": { "@id": "https://aelena.com/#person" }
+      },
+      {
+        "@type": "Book",
+        "name": "Build a Tokenizer in C",
+        "url": "https://aelena74.gumroad.com/l/c-tokenizer",
+        "author": { "@id": "https://aelena.com/#person" },
+        "inLanguage": "en",
+        "bookFormat": "https://schema.org/EBook",
+        "description": "Builds OpenAI's tiktoken tokenizer from scratch in C over eight chapters, with differential tests against the reference implementation."
+      },
+      {
+        "@type": "Book",
+        "name": "Guide to XML-Structured Prompting",
+        "url": "https://aelena74.gumroad.com/l/xsp",
+        "author": { "@id": "https://aelena.com/#person" },
+        "inLanguage": "en",
+        "bookFormat": "https://schema.org/EBook",
+        "description": "Prompting treated as a software engineering discipline: explicit structure, constraints and evidence."
+      }
     ]
   }
   </script>
@@ -86,8 +134,9 @@
         <span class="prompt">&gt;</span> books
         <span class="subtitle">Build a Tokenizer in C &middot; XML Structured Prompting</span>
       </a>
-      <a href="https://github.com/aelena/writings" target="_blank" rel="noopener noreferrer">
+      <a href="https://sig-intent.com/writing/" target="_blank" rel="noopener noreferrer">
         <span class="prompt">&gt;</span> some of my writings
+        <span class="subtitle">essays at sig-intent.com &middot; Self &amp; System on Substack</span>
       </a>
       <a href="https://github.com/aelena/trustworthy-ai" target="_blank" rel="noopener noreferrer">
         <span class="prompt">&gt;</span> trustworthy-ai
