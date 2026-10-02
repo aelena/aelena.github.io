@@ -4,6 +4,8 @@
 
 ## Sites
 
+- [Portfolio](https://aelena.com/portfolio/): CV and selected work in applied AI and software engineering, with tests and evaluation results per project. Also in [Spanish](https://aelena.com/portfolio/es/) and [German](https://aelena.com/portfolio/de/).
+
 - [sig-intent.com](https://sig-intent.com): Advisory practice: fractional CTO, architecture review, AI strategy sprint, advisory retainer. Essays on technology decisions at /writing/.
 - [sig-intent.com/llms.txt](https://sig-intent.com/llms.txt): Machine-readable index of the advisory site and every essay.
 - [Self & System](https://selfandsystem.substack.com): Essays on philosophy, psychology and AI. Same author, different register.
