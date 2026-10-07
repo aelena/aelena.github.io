@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antonio Elena · Portfolio</title>
+<meta name="description" content="Antonio Elena: CTO, architect and author. Selected work in applied AI and software engineering, books, essays, and two sites. English, Spanish, German.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a quiet left rail of sections on wide screens, one reading column of ~68ch, copper rules as the only ornament. */
+:root {
+  --bg: #f5f6f4;          /* cool paper */
+  --surface: #ffffff;
+  --fg: #1d2126;          /* ink */
+  --muted: #5d656e;
+  --rule: #d9ddd8;
+  --accent: #9a5a2c;      /* copper, from the CV's section labels */
+  --accent-soft: #f1e6dc;
+  --ok: #2f6f4e;
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a1f; --surface: #1b2228; --fg: #e6e9ec; --muted: #9aa4ad; --rule: #2c353d;
+    --accent: #d39a68; --accent-soft: #2b2420; --ok: #7fc39c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a1f; --surface: #1b2228; --fg: #e6e9ec; --muted: #9aa4ad; --rule: #2c353d;
+  --accent: #d39a68; --accent-soft: #2b2420; --ok: #7fc39c; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: 16px; line-height: 1.55;
+  padding-inline: 16px; padding-block: 0 48px;
+}
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+a:hover, a:focus-visible { border-bottom-color: var(--accent); outline: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* language switch: only the active language's blocks are visible */
+:root[data-lang="en"] [lang]:not([lang="en"]) { display: none !important; }
+:root[data-lang="es"] [lang]:not([lang="es"]) { display: none !important; }
+:root[data-lang="de"] [lang]:not([lang="de"]) { display: none !important; }
+
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding-block: 10px; margin-inline: -16px; padding-inline: 16px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { font-family: var(--display); font-weight: 500; font-size: 1.05rem; letter-spacing: .01em; }
+.controls { display: flex; gap: 6px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; background: var(--surface); }
+.seg button {
+  font: 500 .78rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  padding: 8px 12px; border: 0; background: transparent; color: var(--muted); cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+.seg button:not([aria-pressed="true"]):hover { color: var(--fg); }
+
+.page { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; max-width: 1100px; margin-inline: auto; padding-top: 24px; }
+@media (min-width: 960px) { .page { grid-template-columns: 200px minmax(0, 1fr); gap: 56px; } }
+nav.rail { display: none; }
+@media (min-width: 960px) {
+  nav.rail { display: block; position: sticky; top: 84px; align-self: start; }
+  nav.rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  nav.rail a { display: block; font: 500 .8rem/1.3 var(--mono); letter-spacing: .04em; color: var(--muted); padding: 4px 0 4px 12px; border-left: 2px solid var(--rule); border-bottom: 0; }
+  nav.rail a:hover, nav.rail a.active { color: var(--fg); border-left-color: var(--accent); }
+}
+main { min-width: 0; max-width: 72ch; }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 500; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.01em; }
+h2 { font-size: 1.65rem; line-height: 1.2; margin-bottom: 18px; }
+h3 { font-size: 1.15rem; line-height: 1.3; }
+.eyebrow { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+section { padding-block: 40px; border-top: 1px solid var(--rule); }
+section:first-of-type { border-top: 0; padding-top: 8px; }
+p { margin: 0 0 14px; }
+.lede { font-family: var(--display); font-size: 1.3rem; line-height: 1.4; color: var(--fg); margin: 18px 0 20px; }
+.muted { color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--mono); font-size: .85rem; }
+.links a::before { content: "> "; color: var(--muted); }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 18px; margin-top: 28px; }
+@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.stat { border-top: 2px solid var(--accent); padding-top: 10px; }
+.stat b { display: block; font: 500 1.6rem/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: .82rem; color: var(--muted); }
+
+.exp { display: grid; gap: 22px; }
+.job { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 14px; }
+@media (max-width: 520px) { .job { grid-template-columns: 1fr; gap: 4px; } }
+.job time { font: 500 .78rem/1.6 var(--mono); color: var(--muted); letter-spacing: .02em; }
+.job h3 { font-weight: 600; font-size: 1.05rem; }
+.job .org { color: var(--muted); font-size: .92rem; margin-bottom: 6px; }
+.job ul { margin: 0; padding-left: 18px; }
+.job li { margin-bottom: 4px; }
+.earlier { font-size: .95rem; color: var(--muted); border-left: 2px solid var(--rule); padding-left: 14px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { font: 500 .78rem/1 var(--mono); padding: 7px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+dl { margin: 0; display: grid; gap: 8px; }
+dt { font-weight: 600; }
+dd { margin: 0; color: var(--muted); font-size: .95rem; }
+
+.work { display: grid; gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; display: grid; gap: 8px; }
+.card header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.card h3 a { color: var(--fg); }
+.card h3 a:hover { color: var(--accent); }
+.card .meta { font: 500 .74rem/1 var(--mono); color: var(--muted); letter-spacing: .03em; }
+.card p { margin: 0; font-size: .96rem; }
+.signals { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 500 .76rem/1.4 var(--mono); color: var(--ok); }
+.signals span::before { content: "✓ "; }
+.group-title { display: flex; align-items: center; gap: 12px; margin: 26px 0 12px; }
+.group-title:first-of-type { margin-top: 0; }
+.group-title h3 { font-size: 1rem; font-family: var(--mono); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.group-title::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+
+.books { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.book { border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 4px; padding: 14px 16px; background: var(--surface); }
+.book h3 { font-size: 1.05rem; }
+.book .meta { font: .76rem/1.5 var(--mono); color: var(--muted); }
+.essays li { margin-bottom: 6px; }
+.essays { padding-left: 18px; margin: 0 0 14px; }
+
+blockquote { margin: 18px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent); font-family: var(--display); font-size: 1.15rem; line-height: 1.45; }
+blockquote footer { font: .8rem/1.4 var(--mono); color: var(--muted); margin-top: 6px; }
+
+.sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.site { background: var(--accent-soft); border-radius: 6px; padding: 18px 20px; }
+.site h3 { margin-bottom: 6px; }
+.site a.url { font-family: var(--mono); font-size: .9rem; }
+
+.contact { display: grid; gap: 8px; font-family: var(--mono); font-size: .95rem; }
+.contact span { color: var(--muted); display: inline-block; min-width: 92px; }
+.contact .row { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.copy { font: 500 .72rem/1 var(--mono); padding: 5px 8px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--muted); cursor: pointer; }
+.copy:hover { color: var(--fg); }
+footer.end { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--rule); font: .78rem/1.6 var(--mono); color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="top" role="banner">
+  <div class="brand">Antonio Elena</div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-set-lang="de" aria-pressed="false">DE</button>
+    </div>
+    <div class="seg" role="group" aria-label="Theme">
+      <button type="button" data-set-theme="light" aria-pressed="false" title="Light">☼</button>
+      <button type="button" data-set-theme="dark" aria-pressed="false" title="Dark">☾</button>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+<nav class="rail" aria-label="Sections">
+  <ol>
+    <li><a href="#cv"><span lang="en">Profile</span><span lang="es">Perfil</span><span lang="de">Profil</span></a></li>
+    <li><a href="#experience"><span lang="en">Experience</span><span lang="es">Experiencia</span><span lang="de">Erfahrung</span></a></li>
+    <li><a href="#ai"><span lang="en">Applied AI</span><span lang="es">IA aplicada</span><span lang="de">Angewandte KI</span></a></li>
+    <li><a href="#engineering"><span lang="en">Engineering</span><span lang="es">Ingeniería</span><span lang="de">Engineering</span></a></li>
+    <li><a href="#writing"><span lang="en">Books &amp; essays</span><span lang="es">Libros y ensayos</span><span lang="de">Bücher &amp; Essays</span></a></li>
+    <li><a href="#background"><span lang="en">Background</span><span lang="es">Trayectoria</span><span lang="de">Hintergrund</span></a></li>
+    <li><a href="#sites"><span lang="en">Sites &amp; contact</span><span lang="es">Sitios y contacto</span><span lang="de">Seiten &amp; Kontakt</span></a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============================================================ HERO / CV ============================================================ -->
+<section id="cv">
+  <div class="eyebrow">
+    <span lang="en">Technology leadership · Architecture · Cloud · AI</span>
+    <span lang="es">Liderazgo tecnológico · Arquitectura · Cloud · IA</span>
+    <span lang="de">Technologieführung · Architektur · Cloud · KI</span>
+  </div>
+  <h1>Antonio Elena</h1>
+  <p class="lede">
+    <span lang="en">Two decades designing systems, setting technology strategy and helping organisations modernise at scale, while still hands-on in the architecture and the codebase.</span>
+    <span lang="es">Dos décadas diseñando sistemas, definiendo estrategia tecnológica y ayudando a organizaciones a modernizarse a escala, sin dejar de tener las manos en la arquitectura y en el código.</span>
+    <span lang="de">Zwei Jahrzehnte Systeme entwerfen, Technologiestrategie setzen und Organisationen bei der Modernisierung im großen Maßstab begleiten, und dabei weiterhin selbst in Architektur und Code arbeiten.</span>
+  </p>
+  <p class="muted">
+    <span lang="en">Madrid, Spain · open to international roles and remote engagements · Spanish, English, Italian</span>
+    <span lang="es">Madrid · abierto a roles internacionales y proyectos en remoto · español, inglés, italiano</span>
+    <span lang="de">Madrid, Spanien · offen für internationale Rollen und Remote-Mandate · Spanisch, Englisch, Italienisch</span>
+  </p>
+  <div class="links">
+    <a href="https://www.linkedin.com/in/aelena/" target="_blank" rel="noopener">linkedin.com/in/aelena</a>
+    <a href="https://github.com/aelena" target="_blank" rel="noopener">github.com/aelena</a>
+    <a href="https://aelena.com" target="_blank" rel="noopener">aelena.com</a>
+    <a href="https://sig-intent.com" target="_blank" rel="noopener">sig-intent.com</a>
+  </div>
+
+  <div class="stats" aria-label="At a glance">
+    <div class="stat"><b>20+</b><span lang="en">years in architecture and engineering leadership</span><span lang="es">años en arquitectura y liderazgo de ingeniería</span><span lang="de">Jahre Architektur und Engineering-Führung</span></div>
+    <div class="stat"><b>800+</b><span lang="en">projects under one design authority at SGS</span><span lang="es">proyectos bajo una misma autoridad de diseño en SGS</span><span lang="de">Projekte unter einer Design Authority bei SGS</span></div>
+    <div class="stat"><b>50+</b><span lang="en">AI-built applications shipped as CTO at BeAI</span><span lang="es">aplicaciones construidas con IA como CTO en BeAI</span><span lang="de">KI-gestützt gebaute Anwendungen als CTO bei BeAI</span></div>
+    <div class="stat"><b>5</b><span lang="en">NuGet packages, ~9,700 downloads</span><span lang="es">paquetes NuGet, ~9.700 descargas</span><span lang="de">NuGet-Pakete, ca. 9.700 Downloads</span></div>
+    <div class="stat"><b>2</b><span lang="en">books published, 12+ essays</span><span lang="es">libros publicados, más de 12 ensayos</span><span lang="de">veröffentlichte Bücher, über 12 Essays</span></div>
+    <div class="stat"><b>57</b><span lang="en">public repositories on GitHub</span><span lang="es">repositorios públicos en GitHub</span><span lang="de">öffentliche Repositories auf GitHub</span></div>
+  </div>
+
+  <div style="margin-top:34px">
+    <div class="eyebrow"><span lang="en">Profile</span><span lang="es">Perfil</span><span lang="de">Profil</span></div>
+    <p lang="en">CTO with two decades in architecture and engineering leadership across enterprise, consulting and startups. Most recently built AI products end to end as CTO of an AI-driven energy business. Before that, ran the global architecture function at SGS, reporting to the Group CIO, as design authority for cloud, modernisation and engineering standards across an IT organisation of more than 800 projects. Works equally at executive level and in the codebase, and is as comfortable running a large engineering organisation as delivering solo.</p>
+    <p lang="es">CTO con dos décadas en arquitectura y liderazgo de ingeniería en gran empresa, consultoría y startups. Recientemente, construcción de productos de IA de principio a fin como CTO de una empresa energética basada en IA. Antes, dirección de la función global de arquitectura de SGS, reportando al CIO del grupo, como autoridad de diseño en cloud, modernización y estándares de ingeniería para una organización de TI de más de 800 proyectos. Trabaja igual de bien a nivel ejecutivo que en el código, y se mueve con la misma soltura dirigiendo una gran organización de ingeniería que entregando en solitario.</p>
+    <p lang="de">CTO mit zwei Jahrzehnten Architektur- und Engineering-Führung in Konzernen, Beratung und Startups. Zuletzt als CTO eines KI-getriebenen Energieunternehmens KI-Produkte von Anfang bis Ende gebaut. Davor Leitung der globalen Architekturfunktion bei SGS, berichtend an den Group CIO, als Design Authority für Cloud, Modernisierung und Engineering-Standards einer IT-Organisation mit über 800 Projekten. Arbeitet gleichermaßen auf Vorstandsebene und im Code, führt eine große Engineering-Organisation ebenso souverän wie er allein liefert.</p>
+
+    <div class="eyebrow" style="margin-top:22px"><span lang="en">Core expertise</span><span lang="es">Competencias clave</span><span lang="de">Kernkompetenzen</span></div>
+    <div class="tags">
+      <span lang="en">Cloud architecture (Azure, PaaS, serverless)</span><span lang="es">Arquitectura cloud (Azure, PaaS, serverless)</span><span lang="de">Cloud-Architektur (Azure, PaaS, Serverless)</span>
+      <span lang="en">AI, GenAI and agentic systems</span><span lang="es">IA, GenAI y sistemas agénticos</span><span lang="de">KI, GenAI und agentische Systeme</span>
+      <span lang="en">Engineering management and org design</span><span lang="es">Dirección de ingeniería y diseño organizativo</span><span lang="de">Engineering-Management und Organisationsdesign</span>
+      <span lang="en">DevOps and DevSecOps at scale</span><span lang="es">DevOps y DevSecOps a escala</span><span lang="de">DevOps und DevSecOps im großen Maßstab</span>
+      <span lang="en">Distributed systems and integration</span><span lang="es">Sistemas distribuidos e integración</span><span lang="de">Verteilte Systeme und Integration</span>
+      <span lang="en">Enterprise architecture</span><span lang="es">Arquitectura empresarial</span><span lang="de">Enterprise-Architektur</span>
+      <span lang="en">Technology strategy and roadmaps</span><span lang="es">Estrategia tecnológica y roadmaps</span><span lang="de">Technologiestrategie und Roadmaps</span>
+      <span lang="en">Board and stakeholder communication</span><span lang="es">Comunicación con consejo y stakeholders</span><span lang="de">Kommunikation mit Vorstand und Stakeholdern</span>
+      <span>.NET · Python · JavaScript · C</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ EXPERIENCE ============================================================ -->
+<section id="experience">
+  <div class="eyebrow"><span lang="en">Experience</span><span lang="es">Experiencia</span><span lang="de">Erfahrung</span></div>
+  <h2><span lang="en">From developer to design authority to CTO</span><span lang="es">De desarrollador a autoridad de diseño a CTO</span><span lang="de">Vom Entwickler über die Design Authority zum CTO</span></h2>
+  <div class="exp">
+    <article class="job">
+      <time>2025 · 2026</time>
+      <div>
+        <h3>Chief Technology Officer</h3>
+        <div class="org">BeAI Energy, Madrid</div>
+        <ul lang="en"><li>Owned technology vision, architecture and the product development cycle of an AI-driven energy business.</li><li>Shipped 50+ internal applications and products with agentic and spec-driven development.</li><li>Built the engineering team, its operating model and its AI-assisted delivery practice.</li></ul>
+        <ul lang="es"><li>Responsable de la visión tecnológica, la arquitectura y el ciclo de desarrollo de producto de una energética basada en IA.</li><li>Más de 50 aplicaciones y productos internos entregados con desarrollo agéntico y dirigido por especificaciones.</li><li>Construcción del equipo de ingeniería, su modelo operativo y su práctica de entrega asistida por IA.</li></ul>
+        <ul lang="de"><li>Verantwortlich für Technologievision, Architektur und Produktentwicklungszyklus eines KI-getriebenen Energieunternehmens.</li><li>Über 50 interne Anwendungen und Produkte mit agentischer, spezifikationsgetriebener Entwicklung ausgeliefert.</li><li>Aufbau des Engineering-Teams, seines Betriebsmodells und seiner KI-gestützten Delivery-Praxis.</li></ul>
+      </div>
+    </article>
+    <article class="job">
+      <time>2025</time>
+      <div>
+        <h3>Development Manager</h3>
+        <div class="org">JTI, Madrid</div>
+        <ul lang="en"><li>Architecture and engineering management for Azure and AKS platforms serving Finance and Supply Chain.</li></ul>
+        <ul lang="es"><li>Arquitectura y dirección de ingeniería de plataformas Azure y AKS para Finanzas y Cadena de Suministro.</li></ul>
+        <ul lang="de"><li>Architektur und Engineering-Management für Azure- und AKS-Plattformen für Finance und Supply Chain.</li></ul>
+      </div>
+    </article>
+    <article class="job">
+      <time>2023 · 2025</time>
+      <div>
+        <h3>Global Head of Architecture &amp; Technology</h3>
+        <div class="org">SGS</div>
+        <ul lang="en"><li>Reported to the Group CIO. Design authority for cloud, integration, modernisation and enterprise architecture across the group.</li><li>Rolled out DevOps, CI/CD and SAST tooling to 800+ projects worldwide.</li><li>Shipped shared platform products and APIs (AI tooling, translation, reporting) used group-wide.</li></ul>
+        <ul lang="es"><li>Reportando al CIO del grupo. Autoridad de diseño en cloud, integración, modernización y arquitectura empresarial para todo el grupo.</li><li>Despliegue de DevOps, CI/CD y herramientas SAST en más de 800 proyectos en todo el mundo.</li><li>Productos de plataforma y APIs compartidos (herramientas de IA, traducción, reporting) usados en todo el grupo.</li></ul>
+        <ul lang="de"><li>Berichtslinie an den Group CIO. Design Authority für Cloud, Integration, Modernisierung und Enterprise-Architektur konzernweit.</li><li>Rollout von DevOps, CI/CD und SAST-Tooling auf über 800 Projekte weltweit.</li><li>Gemeinsame Plattformprodukte und APIs (KI-Tooling, Übersetzung, Reporting) für den gesamten Konzern.</li></ul>
+      </div>
+    </article>
+    <article class="job">
+      <time>2019 · 2023</time>
+      <div>
+        <h3>Head of Software Architecture</h3>
+        <div class="org">SGS</div>
+        <ul lang="en"><li>Built and led the global software architecture practice; design authority for Azure and PaaS adoption.</li><li>Grew DevOps adoption to 20+ organisations and 1,000+ projects.</li><li>Authored the group standards for application development, secure development, web security and API design.</li></ul>
+        <ul lang="es"><li>Creación y dirección de la práctica global de arquitectura de software; autoridad de diseño para la adopción de Azure y PaaS.</li><li>Adopción de DevOps extendida a más de 20 organizaciones y 1.000 proyectos.</li><li>Autor de los estándares del grupo de desarrollo de aplicaciones, desarrollo seguro, seguridad web y diseño de APIs.</li></ul>
+        <ul lang="de"><li>Aufbau und Leitung der globalen Software-Architektur-Praxis; Design Authority für Azure- und PaaS-Einführung.</li><li>DevOps-Adoption auf über 20 Organisationen und 1.000 Projekte ausgeweitet.</li><li>Autor der Konzernstandards für Anwendungsentwicklung, sichere Entwicklung, Web-Sicherheit und API-Design.</li></ul>
+      </div>
+    </article>
+    <article class="job">
+      <time>2015 · 2019</time>
+      <div>
+        <h3>Solutions Architect, then Senior Solutions Architect</h3>
+        <div class="org">UST Global, Madrid</div>
+        <ul lang="en"><li>Architecture and delivery leadership for KPMG (DE, NL, CH), Aviva, Experian, Equifax and Maersk.</li><li>Lead architect on a multi-year, multi-million programme for KPMG Germany; the team grew to 25.</li><li>Led the Microsoft practice: presales, proposal defence, standards and mentoring.</li></ul>
+        <ul lang="es"><li>Liderazgo de arquitectura y entrega para KPMG (DE, NL, CH), Aviva, Experian, Equifax y Maersk.</li><li>Arquitecto principal de un programa plurianual multimillonario para KPMG Alemania; el equipo creció hasta 25 personas.</li><li>Dirección de la práctica Microsoft: preventa, defensa de propuestas, estándares y mentoría.</li></ul>
+        <ul lang="de"><li>Architektur- und Delivery-Führung für KPMG (DE, NL, CH), Aviva, Experian, Equifax und Maersk.</li><li>Leitender Architekt eines mehrjährigen Millionenprogramms für KPMG Deutschland; das Team wuchs auf 25 Personen.</li><li>Leitung der Microsoft-Practice: Presales, Angebotsverteidigung, Standards und Mentoring.</li></ul>
+      </div>
+    </article>
+  </div>
+  <p class="earlier" style="margin-top:22px">
+    <span lang="en"><b>Earlier career, 2001 to 2015.</b> Solutions architect and team lead at Siemens (MDM and BPM platforms for the West Europe cluster), PwC (.NET architecture and SDLC) and VASS (BT, Repsol, Isban), plus contract architecture for Banco Popular and Banco de España. Started as a developer in 2001; freelance English and Spanish technical translator from 1996 to 2002.</span>
+    <span lang="es"><b>Etapa anterior, 2001 a 2015.</b> Arquitecto de soluciones y jefe de equipo en Siemens (plataformas MDM y BPM para el clúster de Europa Occidental), PwC (arquitectura .NET y SDLC) y VASS (BT, Repsol, Isban), más arquitectura como contratista para Banco Popular y Banco de España. Empezó como desarrollador en 2001; traductor técnico inglés-español freelance de 1996 a 2002.</span>
+    <span lang="de"><b>Frühere Laufbahn, 2001 bis 2015.</b> Solutions Architect und Teamleiter bei Siemens (MDM- und BPM-Plattformen für den Cluster Westeuropa), PwC (.NET-Architektur und SDLC) und VASS (BT, Repsol, Isban), dazu Architektur im Auftrag für Banco Popular und Banco de España. Einstieg als Entwickler 2001; freiberuflicher technischer Übersetzer Englisch/Spanisch von 1996 bis 2002.</span>
+  </p>
+
+  <div class="grid2" style="margin-top:30px">
+    <div>
+      <div class="eyebrow"><span lang="en">Education</span><span lang="es">Formación</span><span lang="de">Ausbildung</span></div>
+      <dl>
+        <div><dt>Digital MBA for Technology Leaders</dt><dd>CTO Academy, 2024</dd></div>
+        <div><dt>Business Strategy &amp; Financial Performance</dt><dd>INSEAD, 2021</dd></div>
+        <div><dt>Forecasting Technology Innovation</dt><dd>MIT Professional Education, 2022</dd></div>
+        <div><dt>Master in Data Engineering</dt><dd>Datahack School, Madrid, 2019</dd></div>
+        <div><dt><span lang="en">BA English</span><span lang="es">Licenciatura en Filología Inglesa</span><span lang="de">BA Anglistik</span></dt><dd>Universidad de Sevilla, 1997</dd></div>
+      </dl>
+    </div>
+    <div>
+      <div class="eyebrow"><span lang="en">Languages</span><span lang="es">Idiomas</span><span lang="de">Sprachen</span></div>
+      <dl>
+        <div><dt><span lang="en">Spanish</span><span lang="es">Español</span><span lang="de">Spanisch</span></dt><dd><span lang="en">native</span><span lang="es">nativo</span><span lang="de">Muttersprache</span></dd></div>
+        <div><dt><span lang="en">English</span><span lang="es">Inglés</span><span lang="de">Englisch</span></dt><dd><span lang="en">bilingual; Cambridge Certificate of Proficiency; two years in the UK</span><span lang="es">bilingüe; Cambridge Certificate of Proficiency; dos años en el Reino Unido</span><span lang="de">zweisprachig; Cambridge Certificate of Proficiency; zwei Jahre im Vereinigten Königreich</span></dd></div>
+        <div><dt><span lang="en">Italian</span><span lang="es">Italiano</span><span lang="de">Italienisch</span></dt><dd><span lang="en">professional working proficiency</span><span lang="es">nivel profesional</span><span lang="de">verhandlungssicher im Beruf</span></dd></div>
+      </dl>
+      <div class="eyebrow" style="margin-top:22px"><span lang="en">Advisory</span><span lang="es">Asesoría</span><span lang="de">Beratung</span></div>
+      <p class="muted" style="font-size:.95rem">
+        <span lang="en"><b>SIGINTENT</b>: architecture reviews, AI strategy sprints and fractional CTO work for founders and executive teams.</span>
+        <span lang="es"><b>SIGINTENT</b>: revisiones de arquitectura, sprints de estrategia de IA y trabajo como CTO fraccional para fundadores y equipos directivos.</span>
+        <span lang="de"><b>SIGINTENT</b>: Architektur-Reviews, KI-Strategie-Sprints und Fractional-CTO-Mandate für Gründer und Führungsteams.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ APPLIED AI ============================================================ -->
+<section id="ai">
+  <div class="eyebrow"><span lang="en">Selected work · Applied AI</span><span lang="es">Trabajo seleccionado · IA aplicada</span><span lang="de">Ausgewählte Arbeiten · Angewandte KI</span></div>
+  <h2><span lang="en">AI with tests, evaluations and provenance</span><span lang="es">IA con tests, evaluaciones y procedencia</span><span lang="de">KI mit Tests, Evaluierung und Herkunftsnachweis</span></h2>
+  <p class="muted">
+    <span lang="en">Public repositories, each with CI, tests and a README that says what was measured. Everything below runs locally first and treats a model's output as a claim to verify, not a fact.</span>
+    <span lang="es">Repositorios públicos, cada uno con CI, tests y un README que dice qué se midió. Todo lo de abajo funciona primero en local y trata la salida de un modelo como una afirmación a verificar, no como un hecho.</span>
+    <span lang="de">Öffentliche Repositories, jedes mit CI, Tests und einem README, das sagt, was gemessen wurde. Alles läuft zuerst lokal und behandelt Modellausgaben als zu prüfende Behauptung, nicht als Tatsache.</span>
+  </p>
+  <div class="work">
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/rag-advisor" target="_blank" rel="noopener">RAG Advisor</a></h3><span class="meta">Python · PyPI <code>ragadvisor</code> · CLI, library, Claude Code skill</span></header>
+      <p lang="en">Analyses a document corpus and the infrastructure constraints, then recommends a complete RAG configuration: embeddings, chunking, hybrid retrieval, vector store, reranker, sizing, cost and latency. Every number carries its provenance, and <code>--validate</code> measures the recommendation against ground-truth queries before anything is indexed.</p>
+      <p lang="es">Analiza un corpus de documentos y las restricciones de infraestructura y recomienda una configuración RAG completa: embeddings, chunking, recuperación híbrida, base vectorial, reranker, dimensionamiento, coste y latencia. Cada cifra lleva su procedencia, y <code>--validate</code> mide la recomendación contra consultas con verdad de referencia antes de indexar nada.</p>
+      <p lang="de">Analysiert einen Dokumentenkorpus und die Infrastrukturvorgaben und empfiehlt eine vollständige RAG-Konfiguration: Embeddings, Chunking, hybride Suche, Vektorspeicher, Reranker, Dimensionierung, Kosten und Latenz. Jede Zahl trägt ihre Herkunft, und <code>--validate</code> misst die Empfehlung an Referenzanfragen, bevor irgendetwas indexiert wird.</p>
+      <div class="signals"><span>10 releases</span><span>~300 tests, CI on 4 Python versions</span><span lang="en">responds to an external review in its changelog</span><span lang="es">responde a una revisión externa en su changelog</span><span lang="de">Antwort auf ein externes Review im Changelog</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/agentic-board" target="_blank" rel="noopener">Agentic Board (Idea Refiner)</a></h3><span class="meta">Python · CrewAI · Sanic API · Svelte UI · MCP</span></header>
+      <p lang="en">A boardroom of AI agents declared in YAML: hostile round, chair-led deliberation, coaching and synthesis, with a refine loop that sends the revised idea back to the board. Seats can be grounded in a local library or a company's records through MCP, and every verdict carries confidence, caveats and open questions.</p>
+      <p lang="es">Una sala de juntas de agentes de IA declarada en YAML: ronda hostil, deliberación dirigida por un presidente, coaching y síntesis, con un bucle de refinado que devuelve la idea revisada al consejo. Los asientos pueden fundamentarse en una biblioteca local o en los registros de una empresa vía MCP, y cada veredicto lleva confianza, salvedades y preguntas abiertas.</p>
+      <p lang="de">Ein Gremium aus KI-Agenten, in YAML deklariert: feindliche Runde, vom Vorsitz geführte Deliberation, Coaching und Synthese, mit einer Verfeinerungsschleife, die die überarbeitete Idee zurück ins Gremium gibt. Sitze lassen sich über MCP in einer lokalen Bibliothek oder in Unternehmensunterlagen verankern; jedes Urteil trägt Konfidenz, Vorbehalte und offene Fragen.</p>
+      <div class="signals"><span lang="en">blind eval, 20 ideas: board 13, single model 0, split 7</span><span lang="es">evaluación a ciegas, 20 ideas: consejo 13, modelo único 0, divididas 7</span><span lang="de">Blind-Evaluation, 20 Ideen: Gremium 13, Einzelmodell 0, geteilt 7</span><span>84 tests</span><span lang="en">local models supported</span><span lang="es">modelos locales soportados</span><span lang="de">lokale Modelle unterstützt</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/trustworthy-ai" target="_blank" rel="noopener">Trustworthy AI Body of Knowledge</a></h3><span class="meta">24 pages · 5 code modules · tai-lab · since 2024</span></header>
+      <p lang="en">A programme for an in-house AI assurance capability: bias, explainability, adversarial robustness, evaluation frameworks, differential privacy, the EU AI Act timeline, agentic safety. Prose under CC BY, code under MIT, and a companion lab that runs the evaluations against a model you choose.</p>
+      <p lang="es">Un programa para una capacidad interna de aseguramiento de IA: sesgo, explicabilidad, robustez adversaria, marcos de evaluación, privacidad diferencial, calendario del Reglamento de IA, seguridad agéntica. Prosa bajo CC BY, código bajo MIT y un laboratorio que ejecuta las evaluaciones contra el modelo que elijas.</p>
+      <p lang="de">Ein Programm für eine interne AI-Assurance-Fähigkeit: Bias, Erklärbarkeit, adversariale Robustheit, Evaluierungsrahmen, Differential Privacy, der Zeitplan des EU AI Act, agentische Sicherheit. Texte unter CC BY, Code unter MIT, dazu ein Labor, das die Evaluierungen gegen ein Modell Ihrer Wahl ausführt.</p>
+      <div class="signals"><span lang="en">quarterly reviewed</span><span lang="es">revisión trimestral</span><span lang="de">vierteljährlich überprüft</span><span lang="en">AI Act, NIST AI RMF, OWASP LLM</span><span lang="es">AI Act, NIST AI RMF, OWASP LLM</span><span lang="de">AI Act, NIST AI RMF, OWASP LLM</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/doc-curator" target="_blank" rel="noopener">Documentation Curator</a></h3><span class="meta">Python · CLI, REST API, browser UI</span></header>
+      <p lang="en">The step every knowledge-base project skips: point it at a folder and it reports what the documents are worth as text. Per-file metrics, OCR quality, PII with checksum validation, Markdown-convertibility verdicts, duplicates and versions, topic clusters, and a curation plan with one recommended action per file.</p>
+      <p lang="es">El paso que todo proyecto de base de conocimiento se salta: apúntalo a una carpeta y dice qué valen los documentos como texto. Métricas por fichero, calidad de OCR, PII con validación de checksum, veredictos de convertibilidad a Markdown, duplicados y versiones, clústeres temáticos y un plan de curación con una acción recomendada por fichero.</p>
+      <p lang="de">Der Schritt, den jedes Wissensdatenbank-Projekt überspringt: auf einen Ordner zeigen, und es berichtet, was die Dokumente als Text wert sind. Kennzahlen je Datei, OCR-Qualität, PII mit Prüfsummen, Urteile zur Markdown-Konvertierbarkeit, Duplikate und Versionen, Themencluster und ein Kurationsplan mit einer empfohlenen Aktion je Datei.</p>
+      <div class="signals"><span>334 tests</span><span lang="en">30+ formats incl. CAD and geospatial</span><span lang="es">más de 30 formatos, incl. CAD y geoespacial</span><span lang="de">über 30 Formate, inkl. CAD und Geodaten</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/c-tiktoken" target="_blank" rel="noopener">c-tiktoken</a></h3><span class="meta">C23 · BPE tokenizer · tutorial and book</span></header>
+      <p lang="en">A complete implementation of OpenAI's tokenizer in C, written as teaching material. Differential tests against the Python package (3,000 comparisons per push) and fuzzing of both parsers found real bugs, and the README says which. The eight-chapter tutorial became the book below.</p>
+      <p lang="es">Una implementación completa del tokenizador de OpenAI en C, escrita como material didáctico. Tests diferenciales contra el paquete de Python (3.000 comparaciones por push) y fuzzing de ambos parsers encontraron bugs reales, y el README dice cuáles. El tutorial de ocho capítulos se convirtió en el libro de abajo.</p>
+      <p lang="de">Eine vollständige Implementierung von OpenAIs Tokenizer in C, als Lehrmaterial geschrieben. Differenztests gegen das Python-Paket (3.000 Vergleiche pro Push) und Fuzzing beider Parser fanden echte Fehler, und das README nennt sie. Aus dem achtteiligen Tutorial wurde das Buch unten.</p>
+      <div class="signals"><span lang="en">sanitizer and fuzz CI</span><span lang="es">CI con sanitizers y fuzzing</span><span lang="de">Sanitizer- und Fuzz-CI</span><span>54 commits, 12 PRs</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/flowtrack" target="_blank" rel="noopener">FlowTrack</a></h3><span class="meta">FastAPI · SvelteKit · PostgreSQL · MCP server · Chrome clipper</span></header>
+      <p lang="en">An opinionated portfolio tracker that makes you write down when to quit: abandonment criteria and pre-mortems up front, subjective completion against the figure computed from tasks. Driven by an agent through its MCP server rather than by a chat window, with a Claude Code skill that keeps each repo's record honest.</p>
+      <p lang="es">Un gestor de portfolio con opinión que obliga a escribir cuándo abandonar: criterios de abandono y pre-mortems por adelantado, completitud subjetiva frente a la calculada por tareas. Lo dirige un agente a través de su servidor MCP en vez de una ventana de chat, con una skill de Claude Code que mantiene honesto el registro de cada repositorio.</p>
+      <p lang="de">Ein Portfolio-Tracker mit Haltung, der verlangt, vorab festzuhalten, wann man aufhört: Abbruchkriterien und Pre-Mortems im Voraus, subjektive Fertigstellung gegen die aus Aufgaben berechnete Zahl. Gesteuert von einem Agenten über seinen MCP-Server statt über ein Chatfenster, mit einem Claude-Code-Skill, der die Akte jedes Repos ehrlich hält.</p>
+      <div class="signals"><span>CI · Alembic · 180+ tests</span><span lang="en">MCP tools, resources and prompts</span><span lang="es">herramientas, recursos y prompts MCP</span><span lang="de">MCP-Tools, Ressourcen und Prompts</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================ ENGINEERING ============================================================ -->
+<section id="engineering">
+  <div class="eyebrow"><span lang="en">Selected work · Software engineering</span><span lang="es">Trabajo seleccionado · Ingeniería de software</span><span lang="de">Ausgewählte Arbeiten · Software Engineering</span></div>
+  <h2><span lang="en">Libraries and tools that ship with tests, CI and a licence story</span><span lang="es">Librerías y herramientas que llegan con tests, CI y una historia de licencias</span><span lang="de">Bibliotheken und Werkzeuge mit Tests, CI und einer Lizenzgeschichte</span></h2>
+  <div class="work">
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/file-api" target="_blank" rel="noopener">Aelena.FileApi</a></h3><span class="meta">.NET 10 · HTTP API, CLI, gRPC, NuGet</span></header>
+      <p lang="en">One pure core library exposed four ways: about 130 HTTP routes, a CLI, gRPC and three NuGet packages. PDF, DOCX, XLSX, PPTX, CSV, EPUB, MOBI, email and more, with PII detection and hashing. The AGPL PDF engine is isolated in its own package so the core stays MIT, and the pipeline produces an SBOM, runs CodeQL and dependency review.</p>
+      <p lang="es">Una librería núcleo pura expuesta de cuatro maneras: unas 130 rutas HTTP, una CLI, gRPC y tres paquetes NuGet. PDF, DOCX, XLSX, PPTX, CSV, EPUB, MOBI, correo y más, con detección de PII y hashing. El motor PDF bajo AGPL está aislado en su propio paquete para que el núcleo siga siendo MIT, y el pipeline genera un SBOM y ejecuta CodeQL y revisión de dependencias.</p>
+      <p lang="de">Eine reine Kernbibliothek, auf vier Wegen bereitgestellt: rund 130 HTTP-Routen, eine CLI, gRPC und drei NuGet-Pakete. PDF, DOCX, XLSX, PPTX, CSV, EPUB, MOBI, E-Mail und mehr, mit PII-Erkennung und Hashing. Die AGPL-PDF-Engine ist in ein eigenes Paket isoliert, damit der Kern MIT bleibt; die Pipeline erzeugt eine SBOM und führt CodeQL und Dependency Review aus.</p>
+      <div class="signals"><span>1,060 tests</span><span lang="en">trusted publishing to NuGet</span><span lang="es">publicación confiable en NuGet</span><span lang="de">Trusted Publishing auf NuGet</span><span lang="en">JWT hardening, rate limiting, RFC 9457 errors</span><span lang="es">endurecimiento JWT, limitación de tasa, errores RFC 9457</span><span lang="de">JWT-Härtung, Rate Limiting, RFC-9457-Fehler</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/imagehash-net" target="_blank" rel="noopener">PerceptualHash.NET</a></h3><span class="meta">.NET · NuGet · aHash, dHash, pHash</span></header>
+      <p lang="en">Perceptual image hashing bit-compatible with the Python <code>imagehash</code> library, verified against a golden dataset. A pixel budget against decompression bombs, first-frame-only decoding and strict parsing, with a written threat model. Small on purpose, and finished.</p>
+      <p lang="es">Hashing perceptual de imágenes compatible bit a bit con la librería <code>imagehash</code> de Python, verificado contra un conjunto de referencia. Presupuesto de píxeles contra bombas de descompresión, decodificación solo del primer fotograma y parsing estricto, con un modelo de amenazas escrito. Pequeña a propósito, y terminada.</p>
+      <p lang="de">Perzeptuelles Bild-Hashing, bitkompatibel zur Python-Bibliothek <code>imagehash</code>, gegen einen Referenzdatensatz verifiziert. Pixel-Budget gegen Dekompressionsbomben, Decodierung nur des ersten Frames und strikte Analyse, mit schriftlichem Bedrohungsmodell. Bewusst klein, und fertig.</p>
+      <div class="signals"><span>100% line coverage</span><span>480 tests</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/useful-extensions" target="_blank" rel="noopener">Common-Extensions 2.x</a></h3><span class="meta">C# 14 · netstandard2.0 to net11 · NuGet since 2014</span></header>
+      <p lang="en">A 2014 library rewritten from scratch in 2026 under its original NuGet id, keeping only what the base class library still lacks: string metrics (Levenshtein, Damerau, Jaro-Winkler), sequence operators and functional helpers. Every README example is asserted by a test.</p>
+      <p lang="es">Una librería de 2014 reescrita desde cero en 2026 bajo su id de NuGet original, conservando solo lo que la librería base aún no tiene: métricas de cadenas (Levenshtein, Damerau, Jaro-Winkler), operadores de secuencias y utilidades funcionales. Cada ejemplo del README está afirmado por un test.</p>
+      <p lang="de">Eine Bibliothek von 2014, 2026 unter ihrer ursprünglichen NuGet-ID von Grund auf neu geschrieben, nur mit dem, was der Basisbibliothek weiterhin fehlt: String-Metriken (Levenshtein, Damerau, Jaro-Winkler), Sequenzoperatoren und funktionale Helfer. Jedes README-Beispiel wird durch einen Test abgesichert.</p>
+      <div class="signals"><span>457 tests × 4 targets, 100% coverage</span><span lang="en">7,000+ downloads</span><span lang="es">más de 7.000 descargas</span><span lang="de">über 7.000 Downloads</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/dorksmith" target="_blank" rel="noopener">Dorksmith</a></h3><span class="meta">TypeScript + Python · npm, PyPI, GitHub Pages</span></header>
+      <p lang="en">A deterministic generator of search-operator queries for OSINT and defensive exposure discovery. Two engines, one in JavaScript and one in Python, kept identical by 153 shared golden fixtures. No model involved, by design: when the output must be exact, a rule beats a guess.</p>
+      <p lang="es">Un generador determinista de consultas con operadores de búsqueda para OSINT y descubrimiento defensivo de exposición. Dos motores, uno en JavaScript y otro en Python, mantenidos idénticos por 153 fixtures doradas compartidas. Sin modelo de por medio, a propósito: cuando la salida debe ser exacta, una regla gana a una suposición.</p>
+      <p lang="de">Ein deterministischer Generator für Suchoperator-Abfragen für OSINT und defensive Exposure-Analyse. Zwei Engines, eine in JavaScript und eine in Python, durch 153 gemeinsame Golden Fixtures identisch gehalten. Bewusst ohne Modell: Wo die Ausgabe exakt sein muss, schlägt eine Regel eine Vermutung.</p>
+      <div class="signals"><span lang="en">Playwright end-to-end tests</span><span lang="es">tests end-to-end con Playwright</span><span lang="de">Playwright-End-to-End-Tests</span><span lang="en">live at aelena.github.io/dorksmith</span><span lang="es">en vivo en aelena.github.io/dorksmith</span><span lang="de">live unter aelena.github.io/dorksmith</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/xsp-editor" target="_blank" rel="noopener">XSP Editor</a></h3><span class="meta">React 19 · Fastify · CodeMirror</span></header>
+      <p lang="en">The companion editor to the XML-Structured Prompting book: versioned prompts with diff, templates, labels, a command palette, projects with membership and audit, SQLite storage and a CI with coverage floors that only move up.</p>
+      <p lang="es">El editor que acompaña al libro de XML-Structured Prompting: prompts versionados con diff, plantillas, etiquetas, paleta de comandos, proyectos con membresía y auditoría, almacenamiento SQLite y una CI con umbrales de cobertura que solo suben.</p>
+      <p lang="de">Der Begleiteditor zum Buch über XML-Structured Prompting: versionierte Prompts mit Diff, Vorlagen, Labels, Befehlspalette, Projekte mit Mitgliedschaft und Audit, SQLite-Speicher und eine CI mit Coverage-Schwellen, die nur steigen.</p>
+      <div class="signals"><span>49 commits</span><span lang="en">server 87%, client 64% coverage floors</span><span lang="es">umbrales de cobertura: servidor 87%, cliente 64%</span><span lang="de">Coverage-Schwellen: Server 87 %, Client 64 %</span></div>
+    </article>
+    <article class="card">
+      <header><h3><a href="https://github.com/aelena/claude-skills" target="_blank" rel="noopener">Claude Code skills</a></h3><span class="meta">7 skills · installers · llms.txt</span></header>
+      <p lang="en">Tooling for agents, published: an SEO and generative-engine audit with SARIF output, a BPMN mnemonic, a repository badge detector, an llms.txt generator, a break timer built on hooks, a vibe-to-functional rewriter and a commit poet. Each one solves a problem the author actually had.</p>
+      <p lang="es">Herramientas para agentes, publicadas: una auditoría SEO y de motores generativos con salida SARIF, un mnemónico BPMN, un detector de insignias de repositorio, un generador de llms.txt, un temporizador de pausas construido con hooks, un reescritor de código vibe a funcional y un poeta de commits. Cada una resuelve un problema que el autor tuvo de verdad.</p>
+      <p lang="de">Werkzeuge für Agenten, veröffentlicht: ein SEO- und Generative-Engine-Audit mit SARIF-Ausgabe, eine BPMN-Merkhilfe, ein Repository-Badge-Detektor, ein llms.txt-Generator, ein auf Hooks gebauter Pausen-Timer, ein Vibe-zu-funktional-Umschreiber und ein Commit-Poet. Jedes löst ein Problem, das der Autor tatsächlich hatte.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================ WRITING ============================================================ -->
+<section id="writing">
+  <div class="eyebrow"><span lang="en">Books and essays</span><span lang="es">Libros y ensayos</span><span lang="de">Bücher und Essays</span></div>
+  <h2><span lang="en">Writing is how the decisions get checked</span><span lang="es">Escribir es cómo se comprueban las decisiones</span><span lang="de">Schreiben ist, wie Entscheidungen geprüft werden</span></h2>
+  <div class="books">
+    <article class="book">
+      <h3><a href="https://aelena74.gumroad.com/l/c-tokenizer" target="_blank" rel="noopener">Build a Tokenizer in C</a></h3>
+      <div class="meta">EPUB + PDF · 62 pages · Gumroad</div>
+      <p lang="en">What a BPE tokenizer does and how to build one that matches the reference bit for bit, with the tests that prove it.</p>
+      <p lang="es">Qué hace un tokenizador BPE y cómo construir uno que coincida bit a bit con la referencia, con los tests que lo demuestran.</p>
+      <p lang="de">Was ein BPE-Tokenizer tut und wie man einen baut, der bitgenau mit der Referenz übereinstimmt, samt der Tests, die es beweisen.</p>
+    </article>
+    <article class="book">
+      <h3><a href="https://aelena74.gumroad.com/l/xsp" target="_blank" rel="noopener">Guide to XML-Structured Prompting</a></h3>
+      <div class="meta">EPUB + PDF · 23 worked examples · Gumroad</div>
+      <p lang="en">A method for prompts that survive handover: explicit structure, constraints and evidence, for teams that ship with language models.</p>
+      <p lang="es">Un método para prompts que sobreviven al traspaso: estructura, restricciones y evidencia explícitas, para equipos que entregan con modelos de lenguaje.</p>
+      <p lang="de">Eine Methode für Prompts, die eine Übergabe überstehen: explizite Struktur, Randbedingungen und Belege, für Teams, die mit Sprachmodellen liefern.</p>
+    </article>
+  </div>
+
+  <div class="grid2" style="margin-top:28px">
+    <div>
+      <div class="eyebrow"><span lang="en">SIGINTENT essays · technology decisions</span><span lang="es">Ensayos SIGINTENT · decisiones tecnológicas</span><span lang="de">SIGINTENT-Essays · Technologieentscheidungen</span></div>
+      <ul class="essays">
+        <li><a href="https://sig-intent.com/writing/" target="_blank" rel="noopener">AI is an architecture problem, not just a model problem</a></li>
+        <li><a href="https://sig-intent.com/writing/" target="_blank" rel="noopener">M-shaped engineering</a></li>
+        <li><a href="https://sig-intent.com/writing/" target="_blank" rel="noopener">The evolution of the software architect</a></li>
+        <li><a href="https://sig-intent.com/writing/" target="_blank" rel="noopener">MD, JSON, HTML or XML: pick the format for the next reader</a></li>
+      </ul>
+      <p class="muted" style="font-size:.92rem">
+        <span lang="en">In English, with Spanish adaptations on LinkedIn. More in the pipeline on irreversibility, agentic systems as distributed systems, and what a RAG advisor teaches about evaluation.</span>
+        <span lang="es">En inglés, con adaptaciones al español en LinkedIn. En preparación: irreversibilidad, los sistemas agénticos como sistemas distribuidos, y qué enseña un RAG advisor sobre evaluación.</span>
+        <span lang="de">Auf Englisch, mit spanischen Adaptionen auf LinkedIn. In Vorbereitung: Irreversibilität, agentische Systeme als verteilte Systeme, und was ein RAG-Advisor über Evaluierung lehrt.</span>
+      </p>
+    </div>
+    <div>
+      <div class="eyebrow"><span lang="en">Self &amp; System · philosophy and technology</span><span lang="es">Self &amp; System · filosofía y tecnología</span><span lang="de">Self &amp; System · Philosophie und Technik</span></div>
+      <ul class="essays">
+        <li><a href="https://selfandsystem.substack.com" target="_blank" rel="noopener">AI and the Stoics</a></li>
+        <li><a href="https://selfandsystem.substack.com" target="_blank" rel="noopener">Amor Fati in the Age of Algorithms</a></li>
+        <li><a href="https://selfandsystem.substack.com" target="_blank" rel="noopener">Coherence Seekers</a></li>
+        <li><a href="https://selfandsystem.substack.com" target="_blank" rel="noopener">On the Cult of Action</a></li>
+      </ul>
+      <p class="muted" style="font-size:.92rem">
+        <span lang="en">Eight essays on what the classical tradition (Seneca, Marcus Aurelius, Pascal, Ortega, Byung-Chul Han) has to say about living and building with machines that think.</span>
+        <span lang="es">Ocho ensayos sobre lo que la tradición clásica (Séneca, Marco Aurelio, Pascal, Ortega, Byung-Chul Han) tiene que decir sobre vivir y construir con máquinas que piensan.</span>
+        <span lang="de">Acht Essays darüber, was die klassische Tradition (Seneca, Marc Aurel, Pascal, Ortega, Byung-Chul Han) über das Leben und Bauen mit denkenden Maschinen zu sagen hat.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ BACKGROUND ============================================================ -->
+<section id="background">
+  <div class="eyebrow"><span lang="en">Background and method</span><span lang="es">Trayectoria y método</span><span lang="de">Hintergrund und Methode</span></div>
+  <h2><span lang="en">A polymathic path, deliberately</span><span lang="es">Un camino polímata, a propósito</span><span lang="de">Ein polymathischer Weg, mit Absicht</span></h2>
+  <p lang="en">A degree in English philology and six years as a technical translator came before the first line of production code in 2001. Since then: developer, architect, head of a global architecture function, CTO, with detours through a master's in data engineering, an INSEAD programme on business strategy and a digital MBA for technology leaders. On the side, philosophy, music, photography and languages. The pattern is not breadth for its own sake. It is what the industry now calls an M-shaped profile: deep in architecture and AI, and able to move between product, strategy and organisational design without losing the thread.</p>
+  <p lang="es">Una licenciatura en Filología Inglesa y seis años como traductor técnico precedieron a la primera línea de código en producción, en 2001. Desde entonces: desarrollador, arquitecto, responsable de una función global de arquitectura, CTO, con desvíos por un máster en ingeniería de datos, un programa de estrategia empresarial en INSEAD y un MBA digital para líderes tecnológicos. Al margen, filosofía, música, fotografía e idiomas. El patrón no es amplitud por la amplitud. Es lo que la industria llama ahora un perfil en M: profundo en arquitectura e IA, y capaz de moverse entre producto, estrategia y diseño organizativo sin perder el hilo.</p>
+  <p lang="de">Ein Abschluss in Anglistik und sechs Jahre als technischer Übersetzer gingen der ersten Zeile Produktionscode im Jahr 2001 voraus. Seitdem: Entwickler, Architekt, Leiter einer globalen Architekturfunktion, CTO, mit Umwegen über einen Master in Data Engineering, ein INSEAD-Programm zu Unternehmensstrategie und einen Digital MBA für Technologieführungskräfte. Daneben Philosophie, Musik, Fotografie und Sprachen. Das Muster ist keine Breite um ihrer selbst willen. Es ist, was die Branche heute ein M-förmiges Profil nennt: tief in Architektur und KI, und fähig, sich zwischen Produkt, Strategie und Organisationsdesign zu bewegen, ohne den Faden zu verlieren.</p>
+
+  <blockquote>
+    <span lang="en">Most technology decisions get answered before anyone has agreed what the question is. That is how a defensible architecture becomes an expensive one.</span>
+    <span lang="es">La mayoría de las decisiones tecnológicas se responden antes de que nadie haya acordado cuál es la pregunta. Así es como una arquitectura defendible se convierte en una cara.</span>
+    <span lang="de">Die meisten Technologieentscheidungen werden beantwortet, bevor jemand sich darauf geeinigt hat, was die Frage ist. So wird aus einer vertretbaren Architektur eine teure.</span>
+    <footer>sig-intent.com</footer>
+  </blockquote>
+
+  <div class="grid2">
+    <div>
+      <div class="eyebrow"><span lang="en">How I work</span><span lang="es">Cómo trabajo</span><span lang="de">Wie ich arbeite</span></div>
+      <dl>
+        <div><dt><span lang="en">Diagnose, reframe, commit</span><span lang="es">Diagnosticar, reencuadrar, comprometerse</span><span lang="de">Diagnostizieren, neu rahmen, festlegen</span></dt><dd><span lang="en">Name the decision that cannot be unmade, agree the question, then decide with evidence and a written way back.</span><span lang="es">Nombrar la decisión que no se puede deshacer, acordar la pregunta, y decidir con evidencia y un camino de vuelta por escrito.</span><span lang="de">Die Entscheidung benennen, die sich nicht rückgängig machen lässt, die Frage klären, dann mit Belegen und einem schriftlichen Rückweg entscheiden.</span></dd></div>
+        <div><dt><span lang="en">Measured, not asserted</span><span lang="es">Medido, no afirmado</span><span lang="de">Gemessen, nicht behauptet</span></dt><dd><span lang="en">Every repository above publishes its tests and, where it matters, a benchmark or an evaluation with its caveats.</span><span lang="es">Cada repositorio de arriba publica sus tests y, cuando importa, un benchmark o una evaluación con sus salvedades.</span><span lang="de">Jedes Repository oben veröffentlicht seine Tests und, wo es zählt, einen Benchmark oder eine Evaluierung samt Vorbehalten.</span></dd></div>
+        <div><dt><span lang="en">Spec-driven, AI-assisted delivery</span><span lang="es">Entrega dirigida por especificaciones, asistida por IA</span><span lang="de">Spezifikationsgetriebene, KI-gestützte Delivery</span></dt><dd><span lang="en">How a team ships when agents write half the code: specs first, harness engineering, evaluation, review. Fifty applications at BeAI were built this way.</span><span lang="es">Cómo entrega un equipo cuando los agentes escriben la mitad del código: primero las especificaciones, ingeniería del arnés, evaluación, revisión. Cincuenta aplicaciones en BeAI se construyeron así.</span><span lang="de">Wie ein Team liefert, wenn Agenten die Hälfte des Codes schreiben: Spezifikationen zuerst, Harness-Engineering, Evaluierung, Review. Fünfzig Anwendungen bei BeAI entstanden so.</span></dd></div>
+      </dl>
+    </div>
+    <div>
+      <div class="eyebrow"><span lang="en">Recognition</span><span lang="es">Reconocimientos</span><span lang="de">Auszeichnungen</span></div>
+      <dl>
+        <div><dt>CIO Award, SGS</dt><dd><span lang="en">for the global DevOps and architecture programme</span><span lang="es">por el programa global de DevOps y arquitectura</span><span lang="de">für das globale DevOps- und Architekturprogramm</span></dd></div>
+        <div><dt><span lang="en">UST Global Hackathon 2016</span><span lang="es">Hackathon mundial de UST Global 2016</span><span lang="de">UST Global Hackathon 2016</span></dt><dd><span lang="en">finalist team, 5 of 200+</span><span lang="es">equipo finalista, 5 de más de 200</span><span lang="de">Finalistenteam, 5 von über 200</span></dd></div>
+        <div><dt><span lang="en">UST D3 Dev Conf 2017</span><span lang="es">UST D3 Dev Conf 2017</span><span lang="de">UST D3 Dev Conf 2017</span></dt><dd><span lang="en">whitepaper contest winner</span><span lang="es">ganador del concurso de whitepapers</span><span lang="de">Gewinner des Whitepaper-Wettbewerbs</span></dd></div>
+        <div><dt><span lang="en">Certifications</span><span lang="es">Certificaciones</span><span lang="de">Zertifizierungen</span></dt><dd>MCSD .NET · Principles of Reactive Architecture · unFIX Foundation · MIT Forecasting Technology Innovation</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SITES & CONTACT ============================================================ -->
+<section id="sites">
+  <div class="eyebrow"><span lang="en">Two sites</span><span lang="es">Dos sitios</span><span lang="de">Zwei Seiten</span></div>
+  <h2><span lang="en">Where to read more, and where to start a conversation</span><span lang="es">Dónde leer más, y dónde empezar una conversación</span><span lang="de">Wo es weitergeht, und wo ein Gespräch beginnt</span></h2>
+  <div class="sites">
+    <div class="site">
+      <h3>aelena.com</h3>
+      <p lang="en">The hub: one screen that routes to the writing, the code, the books and the advisory. Start here if you want the whole picture.</p>
+      <p lang="es">El centro: una pantalla que lleva a los escritos, el código, los libros y la asesoría. Empieza aquí si quieres la imagen completa.</p>
+      <p lang="de">Die Drehscheibe: eine Seite, die zu Texten, Code, Büchern und Beratung führt. Hier beginnen, wenn Sie das Gesamtbild wollen.</p>
+      <a class="url" href="https://aelena.com" target="_blank" rel="noopener">aelena.com</a>
+    </div>
+    <div class="site">
+      <h3>sig-intent.com</h3>
+      <p lang="en">The advisory practice: fractional CTO, architecture review, AI strategy sprint, advisory retainer. Method and essays, in English and Spanish. Start here if you have a decision you cannot unmake.</p>
+      <p lang="es">La práctica de asesoría: CTO fraccional, revisión de arquitectura, sprint de estrategia de IA, retainer de asesoría. Método y ensayos, en inglés y español. Empieza aquí si tienes una decisión que no puedes deshacer.</p>
+      <p lang="de">Die Beratungspraxis: Fractional CTO, Architektur-Review, KI-Strategie-Sprint, Beratungs-Retainer. Methode und Essays auf Englisch und Spanisch. Hier beginnen, wenn Sie vor einer Entscheidung stehen, die sich nicht rückgängig machen lässt.</p>
+      <a class="url" href="https://sig-intent.com" target="_blank" rel="noopener">sig-intent.com</a>
+    </div>
+  </div>
+
+  <div class="eyebrow" style="margin-top:30px"><span lang="en">Contact</span><span lang="es">Contacto</span><span lang="de">Kontakt</span></div>
+  <div class="contact">
+    <div class="row"><span lang="en">email</span><span lang="es">correo</span><span lang="de">E-Mail</span> <code id="mail">antonioelena@gmail.com</code> <button class="copy" type="button" data-copy="mail"><span lang="en">copy</span><span lang="es">copiar</span><span lang="de">kopieren</span></button></div>
+    <div class="row"><span lang="en">phone</span><span lang="es">teléfono</span><span lang="de">Telefon</span> <code id="phone">+34 686 398 711</code> <button class="copy" type="button" data-copy="phone"><span lang="en">copy</span><span lang="es">copiar</span><span lang="de">kopieren</span></button></div>
+    <div class="row"><span>LinkedIn</span> <a href="https://www.linkedin.com/in/aelena/" target="_blank" rel="noopener">linkedin.com/in/aelena</a></div>
+    <div class="row"><span>GitHub</span> <a href="https://github.com/aelena" target="_blank" rel="noopener">github.com/aelena</a></div>
+  </div>
+
+  <footer class="end">
+    <span lang="en">Antonio Elena · Madrid · October 2026 · Repository figures as published on GitHub, NuGet and PyPI at that date.</span>
+    <span lang="es">Antonio Elena · Madrid · octubre de 2026 · Cifras de repositorios según GitHub, NuGet y PyPI en esa fecha.</span>
+    <span lang="de">Antonio Elena · Madrid · Oktober 2026 · Repository-Zahlen gemäß GitHub, NuGet und PyPI zu diesem Datum.</span>
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var LANGS = ["en", "es", "de"];
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  function setLang(l) {
+    if (LANGS.indexOf(l) < 0) l = "en";
+    root.setAttribute("data-lang", l);
+    root.setAttribute("lang", l);
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === l));
+    });
+    store("lang", l);
+  }
+  function setTheme(t) {
+    if (t === "light" || t === "dark") { root.setAttribute("data-theme", t); store("theme", t); }
+    else { root.removeAttribute("data-theme"); }
+    document.querySelectorAll("[data-set-theme]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-set-theme") === t));
+    });
+  }
+
+  var saved = load("lang");
+  var browser = (navigator.language || "en").slice(0, 2).toLowerCase();
+  var hash = location.hash.replace("#", "");
+  setLang(LANGS.indexOf(hash) >= 0 ? hash : (saved || (LANGS.indexOf(browser) >= 0 ? browser : "en")));
+  var savedTheme = load("theme");
+  if (savedTheme) setTheme(savedTheme);
+
+  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-set-lang")); });
+  });
+  document.querySelectorAll("[data-set-theme]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = b.getAttribute("data-set-theme");
+      setTheme(root.getAttribute("data-theme") === t ? null : t);
+      if (root.getAttribute("data-theme") === null) { try { localStorage.removeItem("theme"); } catch (e) {} }
+    });
+  });
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var el = document.getElementById(b.getAttribute("data-copy"));
+      var text = el ? el.textContent : "";
+      var done = function () { b.setAttribute("data-done", "1"); setTimeout(function () { b.removeAttribute("data-done"); }, 1200); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { selectText(el); });
+      } else { selectText(el); }
+    });
+  });
+  function selectText(el) {
+    if (!el) return;
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+
+  // rail: highlight the section in view
+  var links = Array.prototype.slice.call(document.querySelectorAll("nav.rail a"));
+  if ("IntersectionObserver" in window && links.length) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { links.forEach(function (a) { a.classList.remove("active"); }); (byId[e.target.id] || {}).classList && byId[e.target.id].classList.add("active"); }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
